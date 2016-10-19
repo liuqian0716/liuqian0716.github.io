@@ -134,15 +134,14 @@ var imgArr = [
     {
         title:'Dimitri Borrey',
         left:[
-                {img:'img/img-1376.jpg'},
-                {label:'A&amp;R - Assistant Manager',address1:'Contact details',address2:'rocco@vangardemusic.com'},
-                {}
+                {img:'img/vangarde.png'},
+                {label:'A&amp;R - Assistant Manager',address1:'Contact details',address2:'rocco@vangardemusic.com'}
         ]
     },
     {
         title:'Loïck Herry',
         left:[
-                {img:'img/img-1376.jpg'},
+                {img:'img/capture.png'},
                 {label:'Label Manager',address1:'Contact details',address2:'info@vangardemusic.com'}
         ]
     },

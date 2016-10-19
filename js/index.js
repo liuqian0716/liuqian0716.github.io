@@ -8,17 +8,11 @@
 document.addEventListener('DOMContentLoaded', function(){
 
         var screen = document.querySelectorAll('.screen');
-        var screen1 = document.querySelector('.screen1');
-        var screen2 = document.querySelector('.screen2');
         var page1 = document.querySelector('.page1');
-        var screen3 = document.querySelector('.screen3');
-        var screen4 = document.querySelector('.screen4');
-        var screen5 = document.querySelector('.screen5');
         var div1 = document.querySelectorAll('.div1');
         var rim = document.querySelectorAll('.rim');
         var content_word = document.querySelector('.content_word');
         
-
         var documentHeight = document.documentElement.clientHeight;
         var documentWidth = document.documentElement.clientWidth;
         for(var i=0;i<screen.length;i++){
@@ -42,39 +36,101 @@ document.addEventListener('DOMContentLoaded', function(){
             }
             //第三页下边的图片
             $('.allText').css('height',$('.allText').css('width'));
-            // console.log(push[i].offsetWidth)
             for(var i=0;i<opened.length;i++){
                 opened[i].style.left = push[i].offsetWidth+'px';
             }
+            //整个页面的拖拽
             drag();
         }
-        var pushImg = document.querySelector('.pushImg');
-        pushImg.style.height = documentHeight-64-88+'px';
+        nestTab();
+        //嵌套选项卡
+        function nestTab(){
+            var pushImg = document.querySelector('.pushImg');
+            pushImg.style.height = documentHeight-64-88+'px';
 
-        var ul = document.querySelector('.contentRight ul');
-        //生成右侧的内容
-        var li = '';
-        for(var i=0;i<imgArr.length;i++){
-            var cl = (i==0)?'choose':'';
-            li+='<li><span class="'+cl+'"></span>Dimitri Borrey</li>';
-        }
-        ul.innerHTML = li;
+            var ul = document.querySelector('.contentRight ul');
+            //生成右侧的内容
+            var li = '';
+            for(var i=0;i<imgArr.length;i++){
+                var cl = (i==0)?'choose':'';
+                li+='<li><span class="'+cl+'"></span>'+imgArr[i].title+'</li>';
+            }
+            ul.innerHTML = li;
 
-        var rightLi = document.querySelectorAll('.contentRight ul li');
-        //点击右侧的
-        for(var i=0;i<rightLi.length;i++){
-            rightLi[i].index = i;
-            rightLi[i].onclick = function(){
-                console.log(this.children[0]);
-                var curNum=this.index;
-                for(var i=0;i<rightLi.length;i++){
-                    rightLi[i].children[0].className = '';
+            var rightLi = document.querySelectorAll('.contentRight ul li');
+            //点击右侧的
+            for(var i=0;i<rightLi.length;i++){
+                rightLi[i].index = i;
+                rightLi[i].onclick = function(){
+                    var curNum=this.index;
+                    for(var i=0;i<rightLi.length;i++){
+                        rightLi[i].children[0].className = '';
+                    }
+                    this.children[0].className = 'choose';
+                    createLeft(this.index);
                 }
-                this.children[0].className = 'choose';
-                createLeft(this.index);
+            }
+            
+            var tabContent = document.querySelectorAll('.tabContent');
+            createLeft(0);
+            function createLeft(n){
+                var img = document.querySelector('.Imgas img');
+                var conLi = '';
+                conLi = `<h3>${imgArr[n].left[1].label}</h3>
+                    <div class="address">
+                        <h4>${imgArr[n].left[1].address1}</h4>
+                        <div>
+                            <p><a href="javascript:;">${imgArr[n].left[1].address2}</a></p>   
+                        </div>
+                    </div>`;
+                img.src=imgArr[n].left[0].img;
+                tabContent[0].innerHTML = conLi;
+                changeLeftImg(n);
+            }
+            function changeLeftImg(n){
+                var item = document.querySelectorAll('.tabTitle .item');
+                var tabContents = document.querySelector('.tabContents');
+                item[0].onclick = function(){
+                    tabContent[0].style.display = 'block';
+                    tabContent[1].style.display = 'none';
+                    addClass(this,'select');
+                    removeClass(this.nextElementSibling,'select');
+                    tabContents.style.top = '0px';
+                }
+                item[1].onclick = function(){
+                    tabContent[0].style.display = 'none';
+                    tabContent[1].style.display = 'block';
+                    addClass(this,'select');
+                    removeClass(this.previousElementSibling,'select');
+                    tabContents.style.top = '0px';
+                }
+
             }
         }
-        
+
+        function addClass(obj, sClass) { 
+            var aClass = obj.className.split(' ');
+            if (!obj.className) {
+                obj.className = sClass;
+                return;
+            }
+            for (var i = 0; i < aClass.length; i++) {
+                if (aClass[i] === sClass) return;
+            }
+            obj.className += ' ' + sClass;
+        }
+
+        function removeClass(obj, sClass) { 
+            var aClass = obj.className.split(' ');
+            if (!obj.className) return;
+            for (var i = 0; i < aClass.length; i++) {
+                if (aClass[i] === sClass) {
+                    aClass.splice(i, 1);
+                    obj.className = aClass.join(' ');
+                    break;
+                }
+            }
+        }
 
 
 
@@ -127,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
 
+        //第四个页面
         function miniScroll(scrollBar,offsetBar,scrollPage,text,opened){
             if(offsetBar<scrollBar){
                 scrollPage.style.cssText = "display:block;height:"+offsetBar/scrollBar*offsetBar+'px;'
@@ -252,38 +309,41 @@ document.addEventListener('DOMContentLoaded', function(){
             点击后让下边的滚动上来
          */
         var header = document.getElementsByTagName('header')[0];
-        var slide = document.querySelector('.screen2 .slide');
-        var mainBottom = document.querySelector('.screen2 .mainBottom'); 
-        var pushs = document.querySelector('.screen2 .pushs');
-        roll(screen2,slide,mainBottom,pushs,function(){
-            mainBottom.style.display = 'none';
-        });
-
-        var slide2 = document.querySelector('.screen3 .slide3');
-        var mainBottom2 = document.querySelector('.screen3 .mainBottom3'); 
-        var pushs2 = document.querySelector('.screen3 .pushs');
-        roll(screen3,slide2,mainBottom2,pushs2);
-
-        var slide4 = document.querySelector('.screen4 .slide');
-        var mainBottom3 = document.querySelector('.screen4 .mainBottom4'); 
+        var slide = document.querySelectorAll('.slide');
+        var mainBottom = document.querySelectorAll('.mainBottom'); 
+        var pushs = document.querySelectorAll('.pushs');
         var pushs4 = document.querySelector('.screen4 .pushs4');
-        roll(screen4,slide4,mainBottom3,pushs4);
+        // var pushs5 = document.querySelector('.screen5 .pushs5');
+        var tabs = document.querySelector('.screen5 .tabs');
+        var tabC = document.querySelector('.tabContents');
+        var mainBottom_sub =document.querySelectorAll('.mainBottom_sub');
 
-        function roll(screen,slide,bottom,push,callBack){
+
+        roll(screen[1],slide[0],mainBottom[0],pushs[0],mainBottom_sub[0]);
+        roll(screen[2],slide[1],mainBottom[1],pushs[1],mainBottom_sub[1]);
+        roll(screen[3],slide[2],mainBottom[2],pushs4,mainBottom_sub[2]);
+        roll(screen[4],slide[3],pushs[2],tabC,mainBottom_sub[3]);
+
+        function roll(screen,slide,bottom,push,main_sub,callBack){
             var back = document.querySelector('.background');
+
+            main_sub.onclick=function(){
+                header.style.top = '0';
+                slide.style.top = -back.scrollHeight+88+'px';;
+            }
 
             screen.onmousewheel = function(ev){
                 if(ev.wheelDelta>0){
                     header.style.top = '-88px';
                     slide.style.top = 0; 
-                    callBack && typeof callBack === 'function' && callBack();             
+                    // callBack && typeof callBack === 'function' && callBack();             
                 }else{
                     bottom.style.display = 'block';
                     header.style.top = '0';
                     slide.style.top = -back.scrollHeight+88+'px';
-
-                    if(documentHeight-88 <= bottom.offsetHeight){
+                    if(documentHeight-88 <= bottom.scrollHeight){
                         bottom.onmousewheel =  function(ev){
+                            
                             var hei=push.getBoundingClientRect();
                             //向上滚动时
                             if(ev.wheelDelta>0){
@@ -298,13 +358,12 @@ document.addEventListener('DOMContentLoaded', function(){
                                 //向下滚动时
                             }else{
                                 if(parseInt(push.getBoundingClientRect().bottom) <= documentHeight){
+                
                                     return ;
                                 }else{
                                     
                                     var cc = parseInt(push.style.top);
-                                
                                     push.style.top = cc-15+'px';
-                                   
                                 }
                             }
                             ev.cancelBubble=true;
@@ -313,12 +372,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             }
         }
-        var mainBottom_sub =document.querySelector('.mainBottom_sub');
-        mainBottom_sub.onclick=function(){
-            header.style.top = '0';
-            var h = mainBottom_pic.offsetHeight;
-            slide.style.top = -documentHeight+88+'px';
-        }
+        
 
         var main2 = document.querySelector('.main2');
         var main3 = document.querySelector('.main3');
@@ -366,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function(){
         })
 
 
-       //昆明那一版，页面的拖拽
+       //另一版，页面的拖拽
         // var disX;
         // var allLeft;
         // //全局变量，储存拖拽状态
@@ -460,6 +514,10 @@ document.addEventListener('DOMContentLoaded', function(){
             all.addEventListener('mousedown',fndown);
             
             function fndown(ev){
+                if(ev.target.tagName == 'INPUT'){
+                    ev.target.focus();
+                }
+ 
                 //+documentWidth*num
                 all.style.transition = '';
                 downL = all.style.left;
@@ -483,6 +541,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                         all.style.left = 0;
                     }else{
+                        //向后切屏
                         if(parseInt(x)<-100){
                             all.style.left = -documentWidth+'px';
                             num++;
@@ -493,22 +552,32 @@ document.addEventListener('DOMContentLoaded', function(){
                     
                 }else{
                     if(parseInt(downL)<parseInt(upL)){
+                        //向前翻页
                         if(parseInt(x)>-documentWidth*(num)+100){
                             num--;
                             if(num<0){
                                 num = 0;
                             }
-                           all.style.left = -documentWidth*(num)+'px';    
+                           all.style.left = -documentWidth*(num)+'px';   
+                           header.style.top = '-88px'; 
                         }else{
                             all.style.left = -documentWidth*(num)+'px';
                         }
                     }else{
                         if(parseInt(x)<(-100+(-documentWidth)*num)){
+                            //向后翻页
                             num++;
                             if(num>4){
                                  num = 4;
                             }
                             all.style.left = -documentWidth*(num)+'px';
+                            header.style.top = '-88px';
+                            // setTimeout(function(){
+                            //     // console.log(slide[0].)
+                            //     slide[0].removeAttribute('top');
+                            //     slide[0].style.top = 0; 
+                            //     pushs[0].style.top = 0;
+                            // },10)
                         }else{
                             all.style.left = -documentWidth*(num)+'px';
                         }
@@ -519,11 +588,11 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
         drag();
-        // all.onmousemove = function(ev){
-        //     // console.log(ev.target.tagName);
+        // all.onmousedown = function(ev){
+        //     console.log(ev.target.tagName);
         //     if(!(ev.target.tagName === 'INPUT')){
         //         drag();
-        //         console.log(mainBottom_pic.offsetHeight)
+        //         // console.log(mainBottom_pic.offsetHeight)
         //     }
         // }
         

@@ -37,96 +37,96 @@ var data = [
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/jasonderulo.jpg'
     },
     {
         day1:'08/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/dalsparis.jpg'
     },
     {
         day1:'03/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-1.jpg'
+        img:'img/ogg.jpg'
     },
     {
         day1:'04/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/juicyjanuary.jpg'
     },
     {
         day1:'05/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-3.jpg'},
+        img:'img/germys.jpg'},
     {
         day1:'06/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/9k=.jpg'
+        img:'img/dalsparis.jpg'
     },
     {
         day1:'07/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/juicy-01.png'
     },
     {
         day1:'08/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/jobee-banner.png'
     },
     {
         day1:'03/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-1.jpg'
+        img:'img/tisha.jpg'
     },
     {
         day1:'04/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/wantigga.jpg'
     },
     {
         day1:'05/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-3.jpg'},
+        img:'img/ekali.jpg'},
     {
         day1:'06/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/9k=.jpg'
+        img:'img/hoodebol.jpg'
     },
     {
         day1:'07/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/juiic2.jpg'
     },
     {
         day1:'08/',
         day2:'Apr. 2016',
         trait:'Swale presents Bryson Tiller',
         address:'bazaar',
-        img:'img/jpg3-2.jpg'
+        img:'img/dirty.jpg'
     }
 ];
 

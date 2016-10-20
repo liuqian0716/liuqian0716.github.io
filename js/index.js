@@ -8,41 +8,80 @@
 document.addEventListener('DOMContentLoaded', function(){
 
         var screen = document.querySelectorAll('.screen');
-        var page1 = document.querySelector('.page1');
         var div1 = document.querySelectorAll('.div1');
         var rim = document.querySelectorAll('.rim');
-        var content_word = document.querySelector('.content_word');
+        var pushs = document.querySelectorAll('.pushs');
+        var all = document.querySelector('.all');
         
         var documentHeight = document.documentElement.clientHeight;
         var documentWidth = document.documentElement.clientWidth;
-        for(var i=0;i<screen.length;i++){
-            screen[i].style.cssText+="width:"+documentWidth+"px;height:"+documentHeight+"px";
-        }
 
-        for(var i=0;i<screen.length;i++){
-            screen[i].style.left = documentWidth*i+'px';
-        }
-        page1.style.top = documentHeight/2-12+'px';
+        size();
+        thumb();
+        nestTab();
 
+        //页面尺寸
+        function size(){
+            for(var i=0;i<screen.length;i++){
+                screen[i].style.cssText+="width:"+documentWidth+"px;height:"+documentHeight+"px";
+            }
+
+            for(var i=0;i<screen.length;i++){
+                screen[i].style.left = documentWidth*i+'px';
+            }
+        }
+        
         //浏览器的窗口改变时，尺寸相应发生变化
         window.onresize=function(){
             documentHeight = document.documentElement.clientHeight;
             documentWidth = document.documentElement.clientWidth;
-            for(var i=0;i<screen.length;i++){
-                screen[i].style.cssText+="width:"+documentWidth+"px;height:"+documentHeight+"px";
-            }
-            for(var i=0;i<screen.length;i++){
-                screen[i].style.left = documentWidth*i+'px';
-            }
+            size();
             //第三页下边的图片
             $('.allText').css('height',$('.allText').css('width'));
             for(var i=0;i<opened.length;i++){
                 opened[i].style.left = push[i].offsetWidth+'px';
             }
             //整个页面的拖拽
-            drag();
+            // drag();
         }
-        nestTab();
+        //对缩略图的操作
+        // (function(){
+            function thumb(){
+                var menu = document.querySelector('.menu');
+                var allP = document.querySelector('.allP');
+                var mainBottom = document.querySelectorAll('.mainBottom');
+                var menu = document.querySelector('.menu');
+                menu.onclick=function(){
+                    allP.style.transition ='.5s';
+                    allP.style.transform='scale(0.4,0.4)';
+                    $('.menu.rig').css('display','block');
+                    $('.menu').eq(0).css('display','none');
+
+                    for(var i=0;i<mainBottom.length;i++){
+                        mainBottom[i].style.display = 'none';
+                    }
+                    $('.fix').css('background-position','-396px -49px');
+                    
+                }
+                for(var i=0;i<screen.length;i++){
+
+                    screen[i].onclick=function(){
+                        $('.menu').eq(1).css('display','none');
+                        $('.menu').eq(0).css('display','block');
+                        $('.fix').css('background-position','0 0');
+                        allP.style.transform = 'scale(1,1)';
+                    }
+                    $('.menu').eq(1).click(function(){
+                        $(this).css('display','none');
+                        $('.menu').eq(0).css('display','block');
+                        allP.style.transform = 'scale(1,1)';
+                        $('.fix').css('background-position','0 0');
+                    })
+                }
+            }
+        // })()
+        
+        
         //嵌套选项卡
         function nestTab(){
             var pushImg = document.querySelector('.pushImg');
@@ -108,44 +147,19 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        function addClass(obj, sClass) { 
-            var aClass = obj.className.split(' ');
-            if (!obj.className) {
-                obj.className = sClass;
-                return;
-            }
-            for (var i = 0; i < aClass.length; i++) {
-                if (aClass[i] === sClass) return;
-            }
-            obj.className += ' ' + sClass;
-        }
-
-        function removeClass(obj, sClass) { 
-            var aClass = obj.className.split(' ');
-            if (!obj.className) return;
-            for (var i = 0; i < aClass.length; i++) {
-                if (aClass[i] === sClass) {
-                    aClass.splice(i, 1);
-                    obj.className = aClass.join(' ');
-                    break;
-                }
-            }
-        }
 
 
-
+        //第四个页面的一些操作
         var scrollPage = document.querySelectorAll('.scrollBar');
         var opened = document.querySelectorAll('.opened');
         var text = document.querySelectorAll('.text');
-        var scrollBar = 0;
-        var offsetBar = 0;
         var push = document.querySelectorAll('.push');
 
         //页面没加载完就获取高度的话，获取的值会有问题，所以用延迟定时器
         setTimeout(function () {
             for(var i=0;i<push.length;i++){
-                scrollBar = opened[i].scrollHeight;
-                offsetBar = opened[i].offsetHeight;
+                var scrollBar = opened[i].scrollHeight;
+                var offsetBar = opened[i].offsetHeight;
                 miniScroll(scrollBar,offsetBar,scrollPage[i],text[i],opened[i]);
                 opened[i].style.left = push[i].offsetWidth+'px';
             }
@@ -153,12 +167,30 @@ document.addEventListener('DOMContentLoaded', function(){
             
         }, 10);
 
-        //第四个页面下的部分
-        var push4 = document.querySelector('.pushs4');
+        //对第四个页面下的内容的操作
+  
         var overlay = document.querySelector('.overlay');
-        push4.onclick = function(ev){
+        var pus = document.querySelectorAll('.screen4 .push');
+        pushs[2].onclick = function(ev){
+      
             if(ev.target.className === 'images'){
+                //有问题
+                // for(var i=0;i<pus.length;i++){
+                //     (function(i){
+                //         pus[i].onclick=function(){
+                //             // pus[i].index = i;
+                //             var n=1||2;
+                //             console.log(i,n,i==5*n-2)
+                //             if(i==5*n-2){
+                //                 console.log('进');
+                //                 pus[i].style.left = -pus[0].offsetWidth+'px';
+                //             }
+                //         }
+                //     })(i);
+                // }
+                
                 if( getComputedStyle(ev.target.nextElementSibling).opacity === '0' ){
+                    // ev.target.nextElementSibling.style.cssText = "visibility:visible;opacity:1;";
                     ev.target.nextElementSibling.style.opacity = '1';
                     overlay.style.display = 'block';
                     ev.target.parentNode.style.zIndex = '13';
@@ -182,8 +214,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
         }
 
-
-        //第四个页面
+        //第四个页面下小页面的滚轮事件
         function miniScroll(scrollBar,offsetBar,scrollPage,text,opened){
             if(offsetBar<scrollBar){
                 scrollPage.style.cssText = "display:block;height:"+offsetBar/scrollBar*offsetBar+'px;'
@@ -237,38 +268,9 @@ document.addEventListener('DOMContentLoaded', function(){
             
             }
         }
+    
 
-        function myWheel(obj,callBack){
-        
-            if(window.navigator.userAgent.toLowerCase().indexOf('firefox')!=-1){
-            
-                obj.addEventListener('DOMMouseScroll',fn1);
-                
-            }else{
-                obj.addEventListener('mousewheel',fn1);
-            }
-        
-            function fn1(ev){
-                var down = 0;
-                down = ev.wheelDelta?(ev.wheelDelta>0?true:false):(ev.detail < 0?true:false);
-                
-                callBack && typeof callBack === 'function' && callBack(down);
-                
-                ev.preventDefault();
-            }
-        }
-
-
-        //适配用的
-        fn();
-        window.addEventListener("resize",fn);
-        function fn() {
-            var html = document.querySelector("html");
-            var wid = html.getBoundingClientRect().width;
-            html.style.fontSize = wid/20 + "px"; //得出来的结果不能小于12 ，68.3
-        }
-
-       //第三屏下边的内容
+       //渲染第三屏下边的内容
         var pushs3 = document.querySelector('.screen3 .pushs');
         var html='';
         for(var i=0;i<data.length;i++){
@@ -306,33 +308,29 @@ document.addEventListener('DOMContentLoaded', function(){
         $('.allText').css('height',$('.allText').css('width'));
 
         /*
-            点击后让下边的滚动上来
+            点击,滚动后让下边的滚动上来
          */
         var header = document.getElementsByTagName('header')[0];
         var slide = document.querySelectorAll('.slide');
         var mainBottom = document.querySelectorAll('.mainBottom'); 
-        var pushs = document.querySelectorAll('.pushs');
-        var pushs4 = document.querySelector('.screen4 .pushs4');
-        // var pushs5 = document.querySelector('.screen5 .pushs5');
-        var tabs = document.querySelector('.screen5 .tabs');
         var tabC = document.querySelector('.tabContents');
         var mainBottom_sub =document.querySelectorAll('.mainBottom_sub');
 
-
-        roll(screen[1],slide[0],mainBottom[0],pushs[0],mainBottom_sub[0]);
-        roll(screen[2],slide[1],mainBottom[1],pushs[1],mainBottom_sub[1]);
-        roll(screen[3],slide[2],mainBottom[2],pushs4,mainBottom_sub[2]);
-        roll(screen[4],slide[3],pushs[2],tabC,mainBottom_sub[3]);
-
-        function roll(screen,slide,bottom,push,main_sub,callBack){
+        for(var i=0;i<3;i++){
+            roll(screen[i+1],slide[i],mainBottom[i],pushs[i],mainBottom_sub[i]);
+        }
+        roll(screen[4],slide[3],mainBottom[3],tabC,mainBottom_sub[3]);
+        //在页面上滚动滚轮触发的事件
+        function roll(screen,slide,bottom,push,main_sub){
             var back = document.querySelector('.background');
-
+            //点击让页面滚上来
             main_sub.onclick=function(){
                 header.style.top = '0';
                 slide.style.top = -back.scrollHeight+88+'px';;
             }
 
             screen.onmousewheel = function(ev){
+                slide.style.transition = '.5s';
                 if(ev.wheelDelta>0){
                     header.style.top = '-88px';
                     slide.style.top = 0; 
@@ -341,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     bottom.style.display = 'block';
                     header.style.top = '0';
                     slide.style.top = -back.scrollHeight+88+'px';
+
                     if(documentHeight-88 <= bottom.scrollHeight){
                         bottom.onmousewheel =  function(ev){
                             
@@ -373,15 +372,11 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
         
-
-        var main2 = document.querySelector('.main2');
-        var main3 = document.querySelector('.main3');
-        var main4 = document.querySelector('.main4');
-        var main5 = document.querySelector('.main5');
-        visition(main2);
-        visition(main3);
-        visition(main4);
-        visition(main5);
+        //视觉差
+        var main = document.querySelectorAll('.main');
+        for(var i=0;i<main.length;i++){
+            visition(main[i]);
+        }
         //视差的函数
         function visition(oParent){
             
@@ -404,8 +399,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        //第一个页面鼠标移上去显示字母边框的效果
-
+        //第一个页面字母边框效果
         $('.div1').each(function(i,e){
             $(e).mouseover(function(){
                 var index = $(e).index('.div1');
@@ -419,90 +413,8 @@ document.addEventListener('DOMContentLoaded', function(){
             })
         })
 
-
-       //另一版，页面的拖拽
-        // var disX;
-        // var allLeft;
-        // //全局变量，储存拖拽状态
-        // var isDrag = false;
-        // //全局变量，储存拖动偏移量
-        // var delta = 0;
-        var all = document.querySelector('.all');
-        // all.style.width = documentWidth*5+'px';
-
-        // //鼠标按下事件，检测是否进入拖拽状态
-        // document.onmousedown = function(ev){
-        //     if(!(ev.target.tagName == 'INPUT')){
-        //         delta = 0;
-        //         isDrag = true;
-        //         all.style.transition = '';
-        //         allLeft = Math.abs(parseInt(all.style.left));
-        //         disX = ev.pageX;
-
-        //         ev.preventDefault();
-        //     }
-        // };
-
-        // all.addEventListener('mousemove', fnmove);
-        // all.addEventListener('mouseup', upup);
-        // //鼠标移动事件，拖拽
-
-        // function fnmove(ev){
-
-        //     //若不在拖拽状态则退出
-        //     if (isDrag === false) return;
-        //     console.log(333)
-        //     //all跟随鼠标运动
-        //     var x = disX - ev.pageX + allLeft;
-        //     if (disX < ev.pageX ) {
-        //         all.style.left = -x + 'px';
-        //         delta++;
-        //     } else {
-        //         all.style.left = -x + 'px';
-        //         delta--;
-        //     }
-        // }
-
-
-        // //鼠标按键抬起事件
-        // function upup() {
-
-        //     //若不在拖拽状态则退出
-        //     if (isDrag === false) return;
-
-        //     //当前allLeft值，不能用全局allLeft
-        //     var allLeft = Math.abs(parseInt(all.style.left));
-        //     all.style.transition = '.5s';
-
-        //     //计算得到当前处于哪一屏，向下取整
-        //     var rate = Math.floor(allLeft >= documentWidth ? allLeft / documentWidth : 0);
-        //     if (delta > 10 && rate > 0) {
-        //         //往后滑动
-        //         all.style.left = -rate * documentWidth + 'px';
-        //         // header.style.top = '-88px';
-        //         // slide.style.top = 0;  
-        //         // console.log(slide.style.top)
-        //     } else if ( delta < (-10) && rate < 4 ) {
-        //         //往前滑动
-        //         rate++;
-
-        //         all.style.left = -rate * documentWidth + 'px';
-        //         // header.style.top = '-88px';
-        //         // setTimeout(function(){
-        //         //     slide.style.top = 0; 
-        //         //     pushs.style.top = 0;
-        //         // },1000)
-               
-        //     } else {
-        //         //不滑动
-        //         all.style.left = -rate * documentWidth + 'px';
-        //     }
-        //     //退出拖拽状态
-        //     isDrag = false;
-        // }
-
-
-
+        
+        //整个页面的拖拽
         var disX;
         var num=0 ;
         var downL ;
@@ -525,7 +437,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 all.addEventListener('mousemove', fnmove);
                 all.addEventListener('mouseup', fnup);
-                ev.preventDefault();
+                ev.preventDefault(); 
             }
             var x;
             function fnmove(ev){
@@ -558,26 +470,36 @@ document.addEventListener('DOMContentLoaded', function(){
                             if(num<0){
                                 num = 0;
                             }
-                           all.style.left = -documentWidth*(num)+'px';   
+                           all.style.left = -documentWidth*(num)+'px'; 
+                           x = 0;  
                            header.style.top = '-88px'; 
+                         
+                            setTimeout(function(){
+                                slide[num].removeAttribute('style');
+                                slide[num].style.top = 0; 
+                                pushs[num].style.top = 0;
+
+                            },500)
                         }else{
                             all.style.left = -documentWidth*(num)+'px';
                         }
                     }else{
                         if(parseInt(x)<(-100+(-documentWidth)*num)){
+           
                             //向后翻页
                             num++;
                             if(num>4){
                                  num = 4;
                             }
                             all.style.left = -documentWidth*(num)+'px';
+                            // $('.screen').eq(num).css('opacity','1').Siblings().css('opacity','.4')
+                            // screen[num].style.opacity = '1';
                             header.style.top = '-88px';
-                            // setTimeout(function(){
-                            //     // console.log(slide[0].)
-                            //     slide[0].removeAttribute('top');
-                            //     slide[0].style.top = 0; 
-                            //     pushs[0].style.top = 0;
-                            // },10)
+                            setTimeout(function(){
+                                slide[num-2].removeAttribute('style');
+                                slide[num-2].style.top = 0; 
+                                pushs[num-2].style.top = 0;
+                            },500)
                         }else{
                             all.style.left = -documentWidth*(num)+'px';
                         }
@@ -586,16 +508,61 @@ document.addEventListener('DOMContentLoaded', function(){
                 all.removeEventListener('mousemove', fnmove);
                 all.removeEventListener('mouseup', fnup);
             }
+
         }
         drag();
-        // all.onmousedown = function(ev){
-        //     console.log(ev.target.tagName);
-        //     if(!(ev.target.tagName === 'INPUT')){
-        //         drag();
-        //         // console.log(mainBottom_pic.offsetHeight)
-        //     }
-        // }
-        
-
 
     })
+
+        //适配用的
+        fn();
+        window.addEventListener("resize",fn);
+        function fn() {
+            var html = document.querySelector("html");
+            var wid = html.getBoundingClientRect().width;
+            html.style.fontSize = wid/20 + "px"; //得出来的结果不能小于12 ，68.3
+        }
+
+        function addClass(obj, sClass) { 
+            var aClass = obj.className.split(' ');
+            if (!obj.className) {
+                obj.className = sClass;
+                return;
+            }
+            for (var i = 0; i < aClass.length; i++) {
+                if (aClass[i] === sClass) return;
+            }
+            obj.className += ' ' + sClass;
+        }
+
+        function removeClass(obj, sClass) { 
+            var aClass = obj.className.split(' ');
+            if (!obj.className) return;
+            for (var i = 0; i < aClass.length; i++) {
+                if (aClass[i] === sClass) {
+                    aClass.splice(i, 1);
+                    obj.className = aClass.join(' ');
+                    break;
+                }
+            }
+        }
+        //兼容滚轮事件
+        function myWheel(obj,callBack){
+        
+            if(window.navigator.userAgent.toLowerCase().indexOf('firefox')!=-1){
+            
+                obj.addEventListener('DOMMouseScroll',fn1);
+                
+            }else{
+                obj.addEventListener('mousewheel',fn1);
+            }
+        
+            function fn1(ev){
+                var down = 0;
+                down = ev.wheelDelta?(ev.wheelDelta>0?true:false):(ev.detail < 0?true:false);
+                
+                callBack && typeof callBack === 'function' && callBack(down);
+                ev.cancelBubble=true;
+                ev.preventDefault();
+            }
+        }
